@@ -5,6 +5,8 @@ stuff I test using c#
 
 This solution follows Clean Architecture principles with clear separation of concerns and dependency rules.
 
+?? **[Configuration Guide](CONFIGURATION.md)** - Detailed documentation on managing configuration across layers
+
 ### Project Structure
 
 ```
@@ -88,6 +90,47 @@ The architecture enforces strict dependency rules to maintain separation of conc
 
 The application is containerized using Docker and can be run alongside a PostgreSQL database.
 
+### Configuration Management
+
+#### Clean Architecture Configuration Strategy
+
+Following Clean Architecture principles, configuration is managed at the appropriate layers:
+
+**ProductCatalog.WebAPI** (Presentation Layer):
+- `appsettings.json` - Base configuration (committed to Git)
+- `appsettings.Development.json` - Development environment settings (ignored by Git)
+- `appsettings.Production.json` - Production environment settings (committed to Git, no secrets)
+- Connection strings defined here and injected into Infrastructure layer via DI
+
+**ProductCatalog.Infrastructure** (Data Layer):
+- Receives DbContext configuration via Dependency Injection
+- No direct configuration files - depends on WebAPI layer
+
+**ProductCatalog.Core** (Domain Layer):
+- No configuration - pure business logic
+- No dependencies on infrastructure or frameworks
+
+#### Environment Variables Setup
+
+**The `.env` file contains your environment configuration:**
+
+Edit `.env` with your values:
+```bash
+# Database Configuration
+DB_PASSWORD=your_secure_password
+POSTGRES_DB=productcatalog
+POSTGRES_USER=postgres
+
+# Application Configuration
+ASPNETCORE_ENVIRONMENT=Development
+
+# Ports
+WEBAPI_PORT=5000
+POSTGRES_PORT=5432
+```
+
+**?? Important:** The `.env` file is ignored by Git to keep secrets safe. Never commit this file to version control.
+
 ### Container Architecture
 
 ```
@@ -138,14 +181,22 @@ docker run -d -p 5000:5000 --name productcatalog-api productcatalog-webapi
 
 ### Environment Variables
 
-The following environment variables can be configured:
+The following environment variables can be configured in the `.env` file:
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `ASPNETCORE_ENVIRONMENT` | Application environment | `Production` |
-| `ASPNETCORE_URLS` | URLs the API listens on | `http://+:5000` |
-| `ConnectionStrings__DefaultConnection` | PostgreSQL connection string | See docker-compose.yml |
-| `DB_PASSWORD` | PostgreSQL password | `postgres` |
+| Variable | Description | Default | Location |
+|----------|-------------|---------|----------|
+| `DB_PASSWORD` | PostgreSQL password | `postgres` | `.env` |
+| `POSTGRES_DB` | Database name | `productcatalog` | `.env` |
+| `POSTGRES_USER` | Database user | `postgres` | `.env` |
+| `ASPNETCORE_ENVIRONMENT` | Application environment | `Development` | `.env` |
+| `WEBAPI_PORT` | External port for WebAPI | `5000` | `.env` |
+| `POSTGRES_PORT` | External port for PostgreSQL | `5432` | `.env` |
+
+**Connection String Format:**
+The connection string is automatically built in docker-compose from environment variables:
+```
+Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${DB_PASSWORD}
+```
 
 ### Ports
 
