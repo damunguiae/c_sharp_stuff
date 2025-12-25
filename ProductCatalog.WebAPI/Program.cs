@@ -1,41 +1,50 @@
+using ProductCatalog.WebAPI.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// ============================================
+// DEPENDENCY INJECTION CONFIGURATION
+// ============================================
+
+// 1. Infrastructure Layer (Data Access)
+builder.Services.AddInfrastructureServices(builder.Configuration);
+
+// 2. Core Layer (Business Logic)
+builder.Services.AddCoreServices();
+
+// 3. Application Layer (Controllers, CORS, etc.)
+builder.Services.AddApplicationServices();
+
+// 4. OpenAPI for API documentation
 builder.Services.AddOpenApi();
+
+// ============================================
+// MIDDLEWARE PIPELINE
+// ============================================
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Development-specific middleware
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowAll");
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// Map controllers
+app.MapControllers();
 
-app.MapGet("/weatherforecast", () =>
+// Health check endpoint
+app.MapGet("/health", () => Results.Ok(new
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    status = "Healthy",
+    timestamp = DateTime.UtcNow,
+    environment = app.Environment.EnvironmentName
+}))
+.WithName("HealthCheck")
+.WithTags("Health");
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
