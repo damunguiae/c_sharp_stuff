@@ -1,5 +1,4 @@
-﻿
-namespace ProductCatalog.Core.Entities
+﻿namespace ProductCatalog.Core.Entities
 {
     public class Product
     {
@@ -10,6 +9,7 @@ namespace ProductCatalog.Core.Entities
         public int StockQuantity { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
         public int Rating { get; set; }
+        public string Category { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }

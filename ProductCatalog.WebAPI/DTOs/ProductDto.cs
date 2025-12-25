@@ -8,6 +8,7 @@ public record ProductDto(
     int StockQuantity,
     string ImageUrl,
     int Rating,
+    string Category,
     DateTime CreatedAt,
     DateTime? UpdatedAt
 );
@@ -18,7 +19,8 @@ public record CreateProductRequest(
     decimal Price,
     int StockQuantity,
     string ImageUrl,
-    int Rating
+    int Rating,
+    string Category
 );
 
 public record UpdateProductRequest(
@@ -27,5 +29,6 @@ public record UpdateProductRequest(
     decimal Price,
     int StockQuantity,
     string ImageUrl,
-    int Rating
+    int Rating,
+    string Category
 );

@@ -26,7 +26,7 @@ public class ProductsController : ControllerBase
         var products = await _productService.GetAllProductsAsync();
         var productDtos = products.Select(p => new ProductDto
         (
-            p.Id, p.Name, p.Description, p.Price, p.StockQuantity, p.ImageUrl, p.Rating, p.CreatedAt, p.UpdatedAt
+            p.Id, p.Name, p.Description, p.Price, p.StockQuantity, p.ImageUrl, p.Rating, p.Category, p.CreatedAt, p.UpdatedAt
         ));
 
         return Ok(productDtos);
@@ -42,7 +42,7 @@ public class ProductsController : ControllerBase
 
         var productDto = new ProductDto(
             product.Id, product.Name, product.Description,
-            product.Price, product.StockQuantity, product.ImageUrl, product.Rating, product.CreatedAt, product.UpdatedAt);
+            product.Price, product.StockQuantity, product.ImageUrl, product.Rating, product.Category, product.CreatedAt, product.UpdatedAt);
 
         return Ok(productDto);
     }
@@ -57,13 +57,14 @@ public class ProductsController : ControllerBase
                 Name = request.Name,
                 Description = request.Description,
                 Price = request.Price,
-                StockQuantity = request.StockQuantity
+                StockQuantity = request.StockQuantity,
+                Category = request.Category
             };
 
             var created = await _productService.CreateProductAsync(product);
             var productDto = new ProductDto(
                 created.Id, created.Name, created.Description,
-                created.Price, created.StockQuantity, created.ImageUrl, created.Rating, created.CreatedAt, created.UpdatedAt);
+                created.Price, created.StockQuantity, created.ImageUrl, created.Rating, created.Category, created.CreatedAt, created.UpdatedAt);
 
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, productDto);
         }
@@ -84,7 +85,8 @@ public class ProductsController : ControllerBase
                 Name = request.Name,
                 Description = request.Description,
                 Price = request.Price,
-                StockQuantity = request.StockQuantity
+                StockQuantity = request.StockQuantity,
+                Category = request.Category
             };
 
             await _productService.UpdateProductAsync(product);

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProductCatalog.Infrastructure.Data;
@@ -11,9 +12,11 @@ using ProductCatalog.Infrastructure.Data;
 namespace ProductCatalog.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251225200137_UpdateImageUrlSource")]
+    partial class UpdateImageUrlSource
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,11 +32,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -69,15 +67,7 @@ namespace ProductCatalog.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Category");
-
                     b.HasIndex("Name");
-
-                    b.HasIndex("Price");
-
-                    b.HasIndex("Category", "Price");
-
-                    b.HasIndex("Category", "Rating");
 
                     b.ToTable("Products");
 
@@ -85,7 +75,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 4, 5, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+1",
@@ -97,7 +86,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+2",
@@ -109,7 +97,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 1, 13, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+3",
@@ -121,7 +108,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 4,
-                            Category = "Food",
                             CreatedAt = new DateTime(2024, 9, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality food product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+4",
@@ -133,7 +119,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            Category = "Food",
                             CreatedAt = new DateTime(2024, 11, 26, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality food product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+5",
@@ -145,7 +130,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 7, 31, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+6",
@@ -157,7 +141,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 7,
-                            Category = "Food",
                             CreatedAt = new DateTime(2024, 5, 20, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality food product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+7",
@@ -169,7 +152,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 8,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 2, 12, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+8",
@@ -181,7 +163,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 9,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 1, 17, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+9",
@@ -193,7 +174,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 10,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 8, 17, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+10",
@@ -205,7 +185,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 11,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 9, 19, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+11",
@@ -217,7 +196,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 12,
-                            Category = "Electronics",
                             CreatedAt = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality electronics product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+12",
@@ -229,7 +207,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 13,
-                            Category = "Home",
                             CreatedAt = new DateTime(2024, 1, 24, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality home product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+13",
@@ -241,7 +218,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 14,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 5, 16, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+14",
@@ -253,7 +229,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 15,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 10, 16, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+15",
@@ -265,7 +240,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 16,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 9, 25, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+16",
@@ -277,7 +251,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 17,
-                            Category = "Electronics",
                             CreatedAt = new DateTime(2024, 2, 29, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality electronics product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+17",
@@ -289,7 +262,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 18,
-                            Category = "Electronics",
                             CreatedAt = new DateTime(2024, 2, 19, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality electronics product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+18",
@@ -301,7 +273,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 19,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+19",
@@ -313,7 +284,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 20,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 1, 9, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+20",
@@ -325,7 +295,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 21,
-                            Category = "Books",
                             CreatedAt = new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality books product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+21",
@@ -337,7 +306,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 22,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 2, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+22",
@@ -349,7 +317,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 23,
-                            Category = "Electronics",
                             CreatedAt = new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality electronics product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+23",
@@ -361,7 +328,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 24,
-                            Category = "Electronics",
                             CreatedAt = new DateTime(2024, 11, 4, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality electronics product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+24",
@@ -373,7 +339,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 25,
-                            Category = "Books",
                             CreatedAt = new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality books product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+25",
@@ -385,7 +350,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 26,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 10, 12, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+26",
@@ -397,7 +361,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 27,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 7, 22, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+27",
@@ -409,7 +372,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 28,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 6, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+28",
@@ -421,7 +383,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 29,
-                            Category = "Books",
                             CreatedAt = new DateTime(2024, 10, 22, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality books product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+29",
@@ -433,7 +394,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 30,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 9, 19, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+30",
@@ -445,7 +405,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 31,
-                            Category = "Home",
                             CreatedAt = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality home product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+31",
@@ -457,7 +416,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 32,
-                            Category = "Beauty",
                             CreatedAt = new DateTime(2024, 12, 9, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality beauty product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+32",
@@ -469,7 +427,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 33,
-                            Category = "Food",
                             CreatedAt = new DateTime(2024, 10, 20, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality food product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+33",
@@ -481,7 +438,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 34,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 3, 24, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+34",
@@ -493,7 +449,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 35,
-                            Category = "Food",
                             CreatedAt = new DateTime(2024, 11, 17, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality food product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+35",
@@ -505,7 +460,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 36,
-                            Category = "Food",
                             CreatedAt = new DateTime(2024, 12, 19, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality food product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+36",
@@ -517,7 +471,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 37,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 9, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+37",
@@ -529,7 +482,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 38,
-                            Category = "Electronics",
                             CreatedAt = new DateTime(2024, 3, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality electronics product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+38",
@@ -541,7 +493,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 39,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+39",
@@ -553,7 +504,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 40,
-                            Category = "Electronics",
                             CreatedAt = new DateTime(2024, 4, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality electronics product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+40",
@@ -565,7 +515,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 41,
-                            Category = "Beauty",
                             CreatedAt = new DateTime(2024, 8, 29, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality beauty product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+41",
@@ -577,7 +526,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 42,
-                            Category = "Beauty",
                             CreatedAt = new DateTime(2024, 12, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality beauty product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+42",
@@ -589,7 +537,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 43,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 6, 20, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+43",
@@ -601,7 +548,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 44,
-                            Category = "Beauty",
                             CreatedAt = new DateTime(2024, 1, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality beauty product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+44",
@@ -613,7 +559,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 45,
-                            Category = "Books",
                             CreatedAt = new DateTime(2024, 9, 3, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality books product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+45",
@@ -625,7 +570,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 46,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 1, 12, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+46",
@@ -637,7 +581,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 47,
-                            Category = "Books",
                             CreatedAt = new DateTime(2024, 5, 13, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality books product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+47",
@@ -649,7 +592,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 48,
-                            Category = "Books",
                             CreatedAt = new DateTime(2024, 4, 27, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality books product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+48",
@@ -661,7 +603,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 49,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 12, 23, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+49",
@@ -673,7 +614,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 50,
-                            Category = "Books",
                             CreatedAt = new DateTime(2024, 3, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality books product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+50",
@@ -685,7 +625,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 51,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 3, 13, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+51",
@@ -697,7 +636,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 52,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 6, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+52",
@@ -709,7 +647,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 53,
-                            Category = "Home",
                             CreatedAt = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality home product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+53",
@@ -721,7 +658,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 54,
-                            Category = "Home",
                             CreatedAt = new DateTime(2024, 4, 23, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality home product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+54",
@@ -733,7 +669,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 55,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+55",
@@ -745,7 +680,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 56,
-                            Category = "Home",
                             CreatedAt = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality home product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+56",
@@ -757,7 +691,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 57,
-                            Category = "Home",
                             CreatedAt = new DateTime(2024, 12, 13, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality home product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+57",
@@ -769,7 +702,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 58,
-                            Category = "Home",
                             CreatedAt = new DateTime(2024, 2, 4, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality home product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+58",
@@ -781,7 +713,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 59,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 7, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+59",
@@ -793,7 +724,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 60,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 11, 3, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+60",
@@ -805,7 +735,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 61,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 8, 16, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+61",
@@ -817,7 +746,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 62,
-                            Category = "Beauty",
                             CreatedAt = new DateTime(2024, 5, 16, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality beauty product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+62",
@@ -829,7 +757,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 63,
-                            Category = "Electronics",
                             CreatedAt = new DateTime(2024, 11, 30, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality electronics product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+63",
@@ -841,7 +768,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 64,
-                            Category = "Food",
                             CreatedAt = new DateTime(2024, 10, 16, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality food product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+64",
@@ -853,7 +779,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 65,
-                            Category = "Books",
                             CreatedAt = new DateTime(2024, 2, 4, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality books product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+65",
@@ -865,7 +790,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 66,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 9, 4, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+66",
@@ -877,7 +801,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 67,
-                            Category = "Beauty",
                             CreatedAt = new DateTime(2024, 11, 4, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality beauty product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+67",
@@ -889,7 +812,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 68,
-                            Category = "Beauty",
                             CreatedAt = new DateTime(2024, 12, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality beauty product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+68",
@@ -901,7 +823,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 69,
-                            Category = "Food",
                             CreatedAt = new DateTime(2024, 10, 24, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality food product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+69",
@@ -913,7 +834,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 70,
-                            Category = "Home",
                             CreatedAt = new DateTime(2024, 5, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality home product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+70",
@@ -925,7 +845,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 71,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 5, 6, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+71",
@@ -937,7 +856,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 72,
-                            Category = "Food",
                             CreatedAt = new DateTime(2024, 11, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality food product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+72",
@@ -949,7 +867,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 73,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 4, 25, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+73",
@@ -961,7 +878,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 74,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+74",
@@ -973,7 +889,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 75,
-                            Category = "Home",
                             CreatedAt = new DateTime(2024, 12, 28, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality home product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+75",
@@ -985,7 +900,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 76,
-                            Category = "Home",
                             CreatedAt = new DateTime(2024, 11, 16, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality home product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+76",
@@ -997,7 +911,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 77,
-                            Category = "Beauty",
                             CreatedAt = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality beauty product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+77",
@@ -1009,7 +922,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 78,
-                            Category = "Food",
                             CreatedAt = new DateTime(2024, 11, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality food product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+78",
@@ -1021,7 +933,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 79,
-                            Category = "Food",
                             CreatedAt = new DateTime(2024, 8, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality food product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+79",
@@ -1033,7 +944,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 80,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 4, 13, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+80",
@@ -1045,7 +955,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 81,
-                            Category = "Books",
                             CreatedAt = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality books product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+81",
@@ -1057,7 +966,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 82,
-                            Category = "Books",
                             CreatedAt = new DateTime(2024, 10, 9, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality books product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+82",
@@ -1069,7 +977,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 83,
-                            Category = "Books",
                             CreatedAt = new DateTime(2024, 4, 12, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality books product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+83",
@@ -1081,7 +988,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 84,
-                            Category = "Home",
                             CreatedAt = new DateTime(2024, 5, 20, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality home product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+84",
@@ -1093,7 +999,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 85,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 10, 27, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+85",
@@ -1105,7 +1010,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 86,
-                            Category = "Electronics",
                             CreatedAt = new DateTime(2024, 2, 6, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality electronics product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+86",
@@ -1117,7 +1021,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 87,
-                            Category = "Books",
                             CreatedAt = new DateTime(2024, 12, 25, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality books product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+87",
@@ -1129,7 +1032,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 88,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 4, 29, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+88",
@@ -1141,7 +1043,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 89,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+89",
@@ -1153,7 +1054,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 90,
-                            Category = "Clothing",
                             CreatedAt = new DateTime(2024, 11, 21, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality clothing product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+90",
@@ -1165,7 +1065,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 91,
-                            Category = "Electronics",
                             CreatedAt = new DateTime(2024, 2, 26, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality electronics product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+91",
@@ -1177,7 +1076,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 92,
-                            Category = "Sports",
                             CreatedAt = new DateTime(2024, 7, 24, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality sports product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+92",
@@ -1189,7 +1087,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 93,
-                            Category = "Beauty",
                             CreatedAt = new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality beauty product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+93",
@@ -1201,7 +1098,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 94,
-                            Category = "Electronics",
                             CreatedAt = new DateTime(2024, 2, 26, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality electronics product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+94",
@@ -1213,7 +1109,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 95,
-                            Category = "Toys",
                             CreatedAt = new DateTime(2024, 9, 21, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality toys product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+95",
@@ -1225,7 +1120,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 96,
-                            Category = "Beauty",
                             CreatedAt = new DateTime(2024, 1, 14, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality beauty product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+96",
@@ -1237,7 +1131,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 97,
-                            Category = "Beauty",
                             CreatedAt = new DateTime(2024, 11, 7, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality beauty product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+97",
@@ -1249,7 +1142,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 98,
-                            Category = "Home",
                             CreatedAt = new DateTime(2024, 3, 5, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality home product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+98",
@@ -1261,7 +1153,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 99,
-                            Category = "Electronics",
                             CreatedAt = new DateTime(2024, 2, 4, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality electronics product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+99",
@@ -1273,7 +1164,6 @@ namespace ProductCatalog.Infrastructure.Migrations
                         new
                         {
                             Id = 100,
-                            Category = "Food",
                             CreatedAt = new DateTime(2024, 5, 31, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "High-quality food product with excellent features. Perfect for everyday use and special occasions.",
                             ImageUrl = "https://via.placeholder.com/300x300?text=Product+100",

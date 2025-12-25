@@ -39,13 +39,25 @@ public class ApplicationDbContext : DbContext
                 .HasDefaultValue(0);
 
             entity.Property(e => e.ImageUrl)
-            .IsRequired();
+                .IsRequired();
 
+            entity.Property(e => e.Category)
+                .IsRequired()
+                .HasMaxLength(100);
 
             entity.Property(e => e.CreatedAt)
                 .IsRequired();
 
+            // Indexes for search performance
             entity.HasIndex(e => e.Name);
+            entity.HasIndex(e => e.Category);
+            entity.HasIndex(e => e.Price);
+            
+            // Composite index for combined Category + Price filtering (common in e-commerce)
+            entity.HasIndex(e => new { e.Category, e.Price });
+            
+            // Composite index for Category + Rating (for "best rated in category" queries)
+            entity.HasIndex(e => new { e.Category, e.Rating });
 
             entity.HasData(GenerateSeedProducts());
         });
@@ -73,6 +85,7 @@ public class ApplicationDbContext : DbContext
                 StockQuantity = random.Next(0, 500),
                 ImageUrl = $"https://via.placeholder.com/300x300?text=Product+{i}",
                 Rating = random.Next(1, 6), // 1-5 stars
+                Category = category,
                 CreatedAt = baseCreatedDate.AddDays(random.Next(0, 365)),
                 UpdatedAt = null
             });
