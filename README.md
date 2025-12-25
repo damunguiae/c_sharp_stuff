@@ -86,6 +86,105 @@ The architecture enforces strict dependency rules to maintain separation of conc
 
 ---
 
+## Entity Framework Core Migrations
+
+Quick reference for managing database schema changes using EF Core migrations.
+
+### Prerequisites
+
+Install EF Core tools globally (one-time setup):
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+### Common Commands
+
+All commands should be run from the solution root directory.
+
+#### Create a New Migration
+
+```bash
+# Basic migration
+dotnet ef migrations add MigrationName --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+
+# With descriptive name (recommended)
+dotnet ef migrations add AddProductRatingColumn --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+```
+
+#### Apply Migrations
+
+```bash
+# Apply all pending migrations to database
+dotnet ef database update --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+
+# Apply to specific migration
+dotnet ef database update MigrationName --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+```
+
+#### Rollback Migrations
+
+```bash
+# Rollback to previous migration
+dotnet ef database update PreviousMigrationName --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+
+# Rollback all migrations (revert to empty database)
+dotnet ef database update 0 --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+```
+
+#### Remove Migrations
+
+```bash
+# Remove last migration (not yet applied to database)
+dotnet ef migrations remove --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+
+# ?? Only works if migration hasn't been applied to any database
+```
+
+#### View Migration Information
+
+```bash
+# List all migrations
+dotnet ef migrations list --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+
+# View migration history in database
+dotnet ef migrations has-pending-model-changes --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+
+# Generate SQL script for a migration (preview changes)
+dotnet ef migrations script --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI
+```
+
+### Best Practices
+
+1. **Naming Conventions**: Use descriptive names that explain what the migration does
+   - ? `AddUserEmailIndex`
+   - ? `SeedInitial100Products`
+   - ? `Migration1` or `Update`
+
+2. **Before Creating**: Ensure your DbContext changes are complete and tested
+
+3. **Review Generated Code**: Always review the generated migration files before applying
+
+4. **Version Control**: Commit migration files to Git after creation
+
+5. **Production Deployments**: Generate SQL scripts for production rather than running `dotnet ef database update` directly:
+   ```bash
+   dotnet ef migrations script --project ProductCatalog.Infrastructure --startup-project ProductCatalog.WebAPI --output migration.sql
+   ```
+
+### Connection String Configuration
+
+Migrations use the connection string from `ProductCatalog.WebAPI/appsettings.json`:
+
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Host=localhost;Port=5432;Database=productcatalog;Username=postgres;Password=your_password"
+}
+```
+
+For Docker environments, ensure the database container is running before applying migrations.
+
+---
+
 ## Docker Deployment
 
 The application is containerized using Docker and can be run alongside a PostgreSQL database.
