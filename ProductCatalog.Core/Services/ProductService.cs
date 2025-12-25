@@ -18,9 +18,10 @@ namespace ProductCatalog.Core.Services
             return await _productRepository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        public async Task<(IEnumerable<Product>, int totalCount)> GetAllProductsAsync(string category, decimal minPrice, decimal maxPrice, int skip, int take)
         {
-            return await _productRepository.GetAllAsync();
+            var products = await _productRepository.GetAllAsync(category, minPrice, maxPrice,skip,take);
+            return products;
         }
 
         public async Task<Product> CreateProductAsync(Product product)

@@ -9,7 +9,7 @@ namespace ProductCatalog.Core.Interfaces
     public interface IProductRepository
     {
         Task<Product?> GetByIdAsync(int id);
-        Task<IEnumerable<Product>> GetAllAsync();
+        Task<(IEnumerable<Product>,int totalCount)> GetAllAsync(string category, decimal minPrice, decimal maxPrice, int skip, int take);
         Task<Product> AddAsync(Product product);
         Task UpdateAsync(Product product);
         Task DeleteAsync(int id);

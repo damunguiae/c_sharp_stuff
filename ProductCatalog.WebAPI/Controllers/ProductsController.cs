@@ -21,18 +21,47 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductDto>>> GetAll()
+    public async Task<ActionResult<PagedResult<ProductDto>>> GetAll(
+        [FromQuery] string category = "all",
+        [FromQuery] decimal? minPrice = null,
+        [FromQuery] decimal? maxPrice = null,
+        [FromQuery] int pageNumber = 1,
+        [FromQuery] int pageSize = 10)
     {
-        var products = await _productService.GetAllProductsAsync();
+
+        // Validate pagination parameters
+        if (pageNumber < 1)
+            return BadRequest(new { message = "Page number must be at least 1." });
+
+        // Calculate skip/take
+        var skip = (pageNumber - 1) * pageSize;
+        var take = pageSize;
+
+        var (products,totalCount) = await _productService.GetAllProductsAsync(
+            category,
+            minPrice ?? 0,
+            maxPrice ?? 1000,
+            skip,
+            take);
+
         var productDtos = products.Select(p => new ProductDto
         (
             p.Id, p.Name, p.Description, p.Price, p.StockQuantity, p.ImageUrl, p.Rating, p.Category, p.CreatedAt, p.UpdatedAt
         ));
 
-        return Ok(productDtos);
+        var result = new PagedResult<ProductDto>
+        {
+            Items = productDtos,
+            PageNumber = pageNumber,
+            PageSize = pageSize,
+            TotalCount = totalCount,
+            TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
+        };
+
+        return Ok(result);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<ProductDto>> GetById(int id)
     {
         var product = await _productService.GetProductAsync(id);

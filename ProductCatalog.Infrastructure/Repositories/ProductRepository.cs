@@ -19,9 +19,30 @@ public class ProductRepository : IProductRepository
         return await _context.Products.FindAsync(id);
     }
 
-    public async Task<IEnumerable<Product>> GetAllAsync()
-    {
-        return await _context.Products.ToListAsync();
+    /// <summary>
+    /// Method to retrieve products by category and price range with pagination.
+    /// </summary>
+    /// <param name="category"></param>
+    /// <param name="minPrice"></param>
+    /// <param name="maxPrice"></param>
+    /// <param name="skip"></param>
+    /// <param name="take"></param>
+    /// <returns></returns>
+    public async Task<(IEnumerable<Product>,int totalCount)> GetAllAsync(string category, decimal minPrice, decimal maxPrice, int skip, int take)
+    {   
+        var query = _context.Products.Where(p => (!string.IsNullOrEmpty(p.Category) && p.Category.ToLower() == category.ToLower()) || category == "all")
+            .Where(p => p.Price >= minPrice)
+            .Where(p => p.Price <= maxPrice);
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .OrderBy(p => p.Category)
+            .ThenBy(p => p.Price)
+            .Skip(skip)      
+            .Take(take) 
+            .ToListAsync();
+
+        return (items, totalCount);
     }
 
     public async Task<Product> AddAsync(Product product)
