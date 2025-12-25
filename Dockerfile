@@ -28,15 +28,14 @@ RUN dotnet publish ProductCatalog.WebAPI.csproj -c Release -o /app/publish /p:Us
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
-# Create a non-root user
-RUN addgroup --system --gid 1000 appgroup && \
-    adduser --system --uid 1000 --ingroup appgroup appuser
+# Create a non-root user (let system assign IDs automatically)
+RUN useradd -r -m -s /bin/bash appuser
 
 # Copy published files
 COPY --from=publish /app/publish .
 
 # Change ownership
-RUN chown -R appuser:appgroup /app
+RUN chown -R appuser:appuser /app
 
 # Switch to non-root user
 USER appuser
